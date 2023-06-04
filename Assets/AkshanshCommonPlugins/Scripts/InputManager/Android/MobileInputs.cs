@@ -12,6 +12,9 @@ namespace AkshanshKanojia.Inputs.Mobile
                 mang.HasMoved += OnTapMove;
                 mang.HasHeld += OnTapStay;
                 mang.HasEnded += OnTapEnd;
+                mang.PinchStarted += OnPinchBegin;
+                mang.HasPinched += OnPinchMove;
+                mang.PinchEnded += OnPinchEnd;
             }
             else
             {
@@ -22,5 +25,8 @@ namespace AkshanshKanojia.Inputs.Mobile
         public abstract void OnTapMove(MobileInputManager.TouchData _data);
         public abstract void OnTapStay(MobileInputManager.TouchData _data);
         public abstract void OnTapEnd(MobileInputManager.TouchData _data);
+        public abstract void OnPinchBegin(MobileInputManager.PinchData _pinchData);
+        public abstract void OnPinchMove(MobileInputManager.PinchData _pinchData);
+        public abstract void OnPinchEnd(MobileInputManager.PinchData _pinchData);
     }
 }

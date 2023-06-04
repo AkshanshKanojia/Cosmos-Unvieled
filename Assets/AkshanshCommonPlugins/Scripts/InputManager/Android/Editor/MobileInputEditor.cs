@@ -12,7 +12,7 @@ namespace AkshanshKanojia.Inputs.Mobile
             var _tempMang = (MobileInputManager)target;
             if(_tempMang.supportCrossPlatformTesting)
             {
-                _tempMang.mouseDragSenstivity = EditorGUILayout.FloatField("MouseDragSenstivity", 2);
+                _tempMang.mouseDragSensitivity = EditorGUILayout.FloatField("MouseDragSenstivity", 2);
             }
         }
     }

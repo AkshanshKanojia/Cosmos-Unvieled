@@ -1,10 +1,11 @@
 using AkshanshKanojia.Inputs.Mobile;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace AkshanshKanojia.Inputs.Button
 {
-    public class ButtonInputManager : MobileInputs, IPointerUpHandler, IPointerDownHandler
+    public class ButtonInputManager : MobileInputs, IPointerUpHandler, IPointerClickHandler,IPointerDownHandler
     {
         [SerializeField] enum AvailableObjectTypes { UIObject, Object2d, Object3d }
         [SerializeField] AvailableObjectTypes CurtType;
@@ -17,6 +18,10 @@ namespace AkshanshKanojia.Inputs.Button
         public event OnButtonTapped OnTap;
         public event OnButtonHeld OnHeld;
         public event OnButtonTapEnd OnLeft;
+        //inspector events
+        public UnityEvent OnClickBegin;
+        public UnityEvent OnClickStay;
+        public UnityEvent OnClickLeft;
 
         bool isTapped = false,isHeld = false;
 
@@ -44,6 +49,7 @@ namespace AkshanshKanojia.Inputs.Button
                         return;
                     isTapped = false;
                     OnLeft?.Invoke(gameObject);
+                    OnClickLeft?.Invoke();
                     break;
                 default:
                     break;
@@ -66,6 +72,7 @@ namespace AkshanshKanojia.Inputs.Button
                         {
                             isTapped = true;
                             OnTap?.Invoke(gameObject);
+                            OnClickBegin?.Invoke();
                         }
                     }
                     break;
@@ -76,6 +83,7 @@ namespace AkshanshKanojia.Inputs.Button
                         {
                             isTapped = true;
                             OnTap?.Invoke(gameObject);
+                            OnClickBegin?.Invoke();
                         }
                     }
                     break;
@@ -97,6 +105,7 @@ namespace AkshanshKanojia.Inputs.Button
                         if (_hit.collider == GetComponent<Collider2D>())
                         {
                             OnHeld?.Invoke(gameObject);
+                            OnClickStay?.Invoke();
                         }
                         else
                         {
@@ -116,6 +125,7 @@ namespace AkshanshKanojia.Inputs.Button
                         if (_tempHit.collider == GetComponent<Collider>())
                         {
                             OnHeld?.Invoke(gameObject);
+                            OnClickStay?.Invoke();
                         }
                         else
                         {
@@ -137,6 +147,7 @@ namespace AkshanshKanojia.Inputs.Button
             if (CurtType == AvailableObjectTypes.UIObject)
             {
                 OnLeft?.Invoke(gameObject);
+                OnClickLeft?.Invoke();
                 isHeld = false;
             }
         }
@@ -146,7 +157,30 @@ namespace AkshanshKanojia.Inputs.Button
             if (CurtType == AvailableObjectTypes.UIObject)
             {
                 isHeld = true;
+                OnClickStay?.Invoke();
+                OnHeld?.Invoke(gameObject);
+            }
+        }
+
+        public override void OnPinchBegin(MobileInputManager.PinchData _pinchData)
+        {
+        }
+
+        public override void OnPinchMove(MobileInputManager.PinchData _pinchData)
+        {
+        }
+
+        public override void OnPinchEnd(MobileInputManager.PinchData _pinchData)
+        {
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (CurtType == AvailableObjectTypes.UIObject)
+            {
+                isHeld = true;
                 OnTap?.Invoke(gameObject);
+                OnClickBegin?.Invoke();
             }
         }
         #endregion

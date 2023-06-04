@@ -37,6 +37,19 @@ namespace AkshanshKanojia.Controllers.PointClick
         public override void OnTapStay(MobileInputManager.TouchData _data)
         {
         }
+
+        public override void OnPinchBegin(MobileInputManager.PinchData _pinchData)
+        {
+        }
+
+        public override void OnPinchMove(MobileInputManager.PinchData _pinchData)
+        {
+            print("Pinching: " + _pinchData.PinchDistance);
+        }
+
+        public override void OnPinchEnd(MobileInputManager.PinchData _pinchData)
+        {
+        }
         #endregion
 
     }
